@@ -23,7 +23,7 @@ admin.site.site_title = "Ride Share Admin Portal"
 admin.site.index_title = "Welcome to RideShare"
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls, name='admin'),
     url(r'^signup/$', core_views.signup, name='signup'),
     url(r'^home/$', core_views.home, name='home'),
 ]
