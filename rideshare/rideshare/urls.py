@@ -17,6 +17,9 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url
 from rideone import views as core_views
+from django.views.generic import RedirectView
+
+redirect_view = RedirectView.as_view(url='/home')
 
 admin.site.site_header = "Ride Share | Login"
 admin.site.site_title = "Ride Share Admin Portal"
@@ -26,4 +29,5 @@ urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
     url(r'^signup/$', core_views.signup, name='signup'),
     url(r'^home/$', core_views.home, name='home'),
+    url(r'^$', redirect_view, name='index'),
 ]
