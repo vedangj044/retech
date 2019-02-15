@@ -4,10 +4,10 @@ from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-xe
-from rideone.forms import VehicleForm, rideForm
+from . import main2
+from rideone.models import vehicle, ride
+from rideone.forms import VehicleForm, rideForm, search
 from django import forms
-
 
 
 def signup(request):
@@ -31,21 +31,47 @@ def home(request):
     listofv = v
     if request.method == "POST":
         MyVehicle1 = rideForm(request.POST)
+        search1 = search(request.POST)
+        print(MyVehicle1.errors)
+        print(search1.errors)
         if MyVehicle1.is_valid():
+            print(2)
             to = MyVehicle1.cleaned_data['to']
             fro = MyVehicle1.cleaned_data['fro']
-            date = MyVehicle1.cleaned_data['date']
-            time = MyVehicle1.cleaned_data['time']
+            contact_date = MyVehicle1.cleaned_data['contact_date']
+            contact_time = MyVehicle1.cleaned_data['contact_time']
             vehicl = MyVehicle1.cleaned_data['widget']
-            add1 = ride(to=to, user=request.user, fro=fro, contact_date=date, contact_time=time)
-            getvehicle = vehicle.object.get(name=vehicl)
-            add1.vehicle = getvehicle
+            add1 = ride(to=to, user=request.user, fro=fro, contact_date=contact_date, contact_time=contact_time)
+            getvehicle = vehicle.objects.get(name=vehicl)
+            add1.vehicl = getvehicle
             add1.save()
             print(add1)
+
+        elif search1.is_valid():
+            distance = {}
+            to = search1.cleaned_data['to']
+            fro = search1.cleaned_data['fro']
+            contact_date = search1.cleaned_data['contact_date']
+            for i in range(1, len(ride.objects.all())+1):
+                print(i)
+                available = ride.objects.get(id=i)
+                f = open('rideone/find.txt', 'w+')
+                f.write(" "+available.fro)
+                f.write(" "+to)
+                f.write(" "+fro)
+                f.write(" "+available.to)
+                f.close()
+                c = main2.critical()
+                distance[i]=c
+            if distance:
+                id1 = min(distance, key=distance.get)
+                gf = ride.objects.get(id=id1)
+                send = ["Vehicle: "+str(gf.vehicl), "Owner: "+str(gf.user)]
+                return render(request, 'home.html/', {'send': send})
     else:
         MyVehicle1 = rideForm()
 
-    return render(request, 'home.html', {'vehicle': v})
+    return render(request, 'home.html', {'vehicle': v, 'form': MyVehicle1})
 
 @login_required(login_url="/signup")
 def new(request):
@@ -61,6 +87,7 @@ def new(request):
             model1 = MyVehicle.cleaned_data['model']
             add = vehicle(name=name, user=request.user, register=register, people=people, model=model1)
             add.save()
+            return redirect('home')
     else:
         MyVehicle = VehicleForm()
     return render(request, 'new.html')
