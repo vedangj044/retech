@@ -16,6 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+admin.site.site_header = "Ride Share | Login"
+admin.site.site_title = "Ride Share Admin Portal"
+admin.site.index_title = "Welcome to RideShare"
+
 urlpatterns = [
     path('admin/', admin.site.urls),
 ]
