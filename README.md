@@ -4,6 +4,8 @@ RideShare
 
 Ride Sharing App based on Django Web framework
 ------------
+![alt text](
+https://github.com/vedangj044/retech/blob/master/Screenshot%20(24).png)
 
 Introduction
 ------------
