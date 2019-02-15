@@ -29,5 +29,6 @@ urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
     url(r'^signup/$', core_views.signup, name='signup'),
     url(r'^home/$', core_views.home, name='home'),
+    url(r'^new/$', core_views.new, name='new'),
     url(r'^$', redirect_view, name='index'),
 ]
