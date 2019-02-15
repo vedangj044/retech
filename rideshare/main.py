@@ -1,7 +1,8 @@
 from selenium import webdriver
-from webdriver_manager.chrome import ChromeDriverManager as c
+from webdriver_manager.chrome import ChromeDriverManager
 
-brower = webdriver.Chrome(c().install())
+driver = webdriver.Chrome(ChromeDriverManager().install())
+driver.get("https://www.google.com/maps")
 
-website_URL ="https://www.google.co.in/"
-brower.get(website_URL)
+elem = driver.find_element_by_xpath('//*[@id="searchbox-directions"]')
+elem.click()
