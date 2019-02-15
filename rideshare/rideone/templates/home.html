@@ -1,0 +1,37 @@
+<button><a href="/admin/logout">Logout</a></button>
+
+<form method="post">{% csrf_token %}
+  <div style = "max-width:470px;">
+        <center>
+           <input type = "text" style = "margin-left:20%;"
+              placeholder = "Identifiant" name = "to" />
+        </center>
+     </div>
+     <div style = "max-width:470px;">
+           <center>
+              <input type = "text" style = "margin-left:20%;"
+                 placeholder = "Identifiant" name = "fro" />
+           </center>
+        </div>
+        <div style = "max-width:470px;">
+              <center>
+                 <input type = "date" style = "margin-left:20%;"
+                    placeholder = "Identifiant" name = "date" />
+              </center>
+           </div>
+           <div style = "max-width:470px;">
+                 <center>
+                    <input type = "time" style = "margin-left:20%;"
+                       placeholder = "Identifiant" name = "time" />
+                 </center>
+              </div>
+              <div style = "max-width:470px;">
+                <select>
+                  {% for i in vehicle %}
+                    <option name="widget">{{ i }}</option>
+                  {% endfor %}
+
+                </select>
+                 </div>
+                <button type="submit">Update Ride</button>
+</form>
