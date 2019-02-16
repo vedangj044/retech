@@ -18,7 +18,7 @@ class ride(models.Model):
     fro = models.CharField(max_length=100)
     contact_date = models.DateField(blank=True)
     contact_time = models.TimeField(blank=True)
-    vehicl = models.ForeignKey(vehicle, on_delete=models.CASCADE)
+    vehicl = models.ForeignKey(vehicle, on_delete=models.CASCADE ,null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):

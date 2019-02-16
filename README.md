@@ -22,7 +22,7 @@ We use the following libraries
 * Webdriver-manager
 and
 * Django
-to connect evrything
+to connect everything
 
 Initially a user with his/her vehicle registers at our website, entering his 'source', 'destination' and 'time of trip'.
 Then, when a user, who doesn't have a vehicle, login to our web-app, he enters his 'source' and 'destination'.

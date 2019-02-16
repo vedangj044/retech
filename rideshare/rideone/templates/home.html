@@ -1,37 +1,350 @@
-<button><a href="/admin/logout">Logout</a></button>
 
-<form method="post">{% csrf_token %}
-  <div style = "max-width:470px;">
-        <center>
-           <input type = "text" style = "margin-left:20%;"
-              placeholder = "Identifiant" name = "to" />
-        </center>
-     </div>
-     <div style = "max-width:470px;">
-           <center>
-              <input type = "text" style = "margin-left:20%;"
-                 placeholder = "Identifiant" name = "fro" />
-           </center>
-        </div>
-        <div style = "max-width:470px;">
-              <center>
-                 <input type = "date" style = "margin-left:20%;"
-                    placeholder = "Identifiant" name = "date" />
-              </center>
-           </div>
-           <div style = "max-width:470px;">
-                 <center>
-                    <input type = "time" style = "margin-left:20%;"
-                       placeholder = "Identifiant" name = "time" />
-                 </center>
-              </div>
-              <div style = "max-width:470px;">
-                <select>
-                  {% for i in vehicle %}
-                    <option name="widget">{{ i }}</option>
-                  {% endfor %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Page Title</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-                </select>
-                 </div>
-                <button type="submit">Update Ride</button>
-</form>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+/* Style the body */
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+}
+/* Header/logo Title */
+.header {
+  padding: 80px;
+  text-align: center;
+  background: #1abc9c;
+  color: white;
+}
+/* Increase the font size of the heading */
+.header h1 {
+  font-size: 40px;
+}
+/* Sticky navbar - toggles between relative and fixed, depending on the scroll position. It is positioned relative until a given offset position is met in the viewport - then it "sticks" in place (like position:fixed). The sticky value is not supported in IE or Edge 15 and earlier versions. However, for these versions the navbar will inherit default position */
+.navbar {
+  overflow: hidden;
+  background-color: #333;
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
+}
+/* Style the navigation bar links */
+.navbar a {
+  float: left;
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 20px;
+  text-decoration: none;
+}
+/* Right-aligned link */
+.navbar a.right {
+  float: right;
+}
+/* Change color on hover */
+.navbar a:hover {
+  background-color: #ddd;
+  color: black;
+}
+/* Active/current link */
+.navbar a.active {
+  background-color: #666;
+  color: white;
+}
+/* Column container */
+.row {
+  display: -ms-flexbox; /* IE10 */
+  display: flex;
+  -ms-flex-wrap: wrap; /* IE10 */
+  flex-wrap: wrap;
+}
+/* Create two unequal columns that sits next to each other */
+/* Sidebar/left column */
+.side {
+  -ms-flex: 30%; /* IE10 */
+  flex: 30%;
+  background-color: #f1f1f1;
+  padding: 20px;
+}
+/* Main column */
+.main {
+  -ms-flex: 70%; /* IE10 */
+  flex: 70%;
+  background-color: white;
+  padding: 20px;
+}
+/* Fake image, just for this example */
+.fakeimg {
+  background-color: #aaa;
+  width: 100%;
+  padding: 20px;
+}
+/* Footer */
+.footer {
+  padding: 20px;
+  text-align: center;
+  background: #ddd;
+
+}
+/* Responsive layout - when the screen is less than 700px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 700px) {
+  .row {
+    flex-direction: column;
+  }
+}
+/* Responsive layout - when the screen is less than 400px wide, make the navigation links stack on top of each other instead of next to each other */
+@media screen and (max-width: 400px) {
+  .navbar a {
+    float: none;
+    width: 100%;
+  }
+}
+/*from here*/
+* {
+  box-sizing: border-box;
+}
+/* Style inputs */
+input[type=text], select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  resize: vertical;
+}
+input[type=submit] {
+  background-color: #1abc9c;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  cursor: pointer;
+}
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+/* Style the container/contact section */
+.container {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 10px;
+}
+/* Create two columns that float next to eachother */
+.column {
+  float: left;
+  width: 40%;
+  margin-top: 6px;
+  padding: 10px;
+}
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .column, input[type=submit] {
+    width: 100%;
+    margin-top: 0;
+  }
+}
+.dropbtn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+}
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {background-color: #ddd;}
+.dropdown:hover .dropdown-content {display: block;}
+.dropdown:hover .dropbtn {background-color: #3e8e41;}
+button {
+  background-color: #50917B;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+.client{
+  border: 2px solid #1abc9c;
+  border-radius: 2px;
+  width: 100%;
+}
+h3{
+  font-family: monospace;
+  font-size: 30px;
+  margin: 20px;
+}
+#newr{
+  margin: 50px;
+  border-bottom: 1px solid cyan;
+  width: 300px;
+}
+#cli{
+  font-family: monospace;
+}
+</style>
+<script>
+function openCity(evt, cityName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(cityName).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+// Get the element with id="defaultOpen" and click on it
+document.getElementById("defaultOpen").click();
+</script>
+</head>
+<body>
+
+<div class="header">
+  <h1>Ride Share</h1>
+  <button style="float:right"><a href="/admin/logout">Logout</a></button>
+  <!-- <p> <b>responsive</b> website created by me.</p> -->
+</div>
+
+<div class="navbar">
+  <a href="#" id="tabd1" class="tablinks" class="active" onclick="openCity(event, 'London')" style="width:50%; "><b>I Have Any Vehicle</b></a>
+  <a href="#" id="tabd2" class="tablinks" onclick="openCity(event, 'Paris')" style="width:50%;"><b>I Don't Have a Vehicle</b></a>
+  <!-- <button class="tablinks" onclick="openCity(event, 'London')">I Don't Have Any Vehicle</button>
+  <button class="tablinks" onclick="openCity(event, 'Paris')">I Have a Vehicle</button> -->
+
+</div>
+
+
+  <div class="container">
+  <div id="London" class="tabcontent">
+  <div class="row">
+    <div class="column">
+      <img src="notvehicle.jpg" style="width:90%">
+    </div>
+    <form method='post' style="display:inline-block">{% csrf_token %}
+    <div class="column"  style="float:left; display:inline-block;">
+     <label for="fname">To</label>
+        <input type="text" id="fname" name="fro" placeholder="Enter Drop Location">
+        <label for="lname">From</label>
+        <input type="text" id="lname" name="to" placeholder="Enter PickUp Location">
+        <label style="margin:0px, 20px, 20px, 20px" for="country">When</label>
+        <input type="time" id="lname" name="contact_time" placeholder="Time">
+        <input type="date" id="lname" name="contact_date" placeholder="Date">
+        <input style="width:100%;opacity:0"/>
+       <label style="" for="subject">Select Vehicle</label>
+       <div style = "max-width:470px;">
+         <select id="mySelect" onchange="myFunction()">
+           {% for i in vehicle %}
+             <option value={{i}}>{{ i }}
+           {% endfor %}
+         </select>
+         <button><a href="/new">Add Vehicle</a></button>
+         <input style="opacity:0" id="demo" type="text" name="widget"/>
+       </div>
+        <input style="width:500px;font-size:30px;"type="submit" value="Update Ride">
+    </div>
+    </form>
+    <script>
+    function myFunction() {
+      var x = document.getElementById("mySelect").value;
+      document.getElementById("demo").value= x;
+    }
+    </script>
+  </div>
+</div>
+
+
+<div id="Paris" class="tabcontent" style="display:none;">
+  <div class="row">
+    <div class="column">
+      <img src="vehicle.jpg" style="width:90%">
+    </div>
+
+
+    <div class="column"  >
+    <form method="post">{% csrf_token %}
+     <label for="fname">To</label>
+        <input type="text" id="fname" name="to" placeholder="Enter Drop Location">
+        <label for="lname">From</label>
+        <input type="text" id="lname" name="fro" placeholder="Enter PickUp Location">
+        <label for="country">When</label>
+        <input type="date" id="lname" name="contact_date" placeholder="Date">
+        <br>
+        <br>
+        <input style="font-size:35px;"type="submit" value="Find a ride" style="margin-left:150px;">
+    </div>
+  </form>
+  <div class="client">
+
+    <h3>Car Details</h3>
+    {% for i in send %}
+    <div id="newr">
+      <h2 id="cli">{{ i }}</h2>
+      <button  value="Connect">Connect</button>
+    </div>
+    {% endfor %}
+
+  </div>
+
+  </div>
+</div>
+</div>
+
+
+<div class="footer">
+  <h2>Made For RE.3TCH</h2>
+</div>
+
+</body>
+</html>
+<script type="text/javascript">
+  var i = 0;
+  if(i === 0){
+  var x = document.getElementById('tabd1');
+  x.style.backgroundColor = "#666";
+  x.style.color = "white";
+  i++;
+}
+var y = document.getElementById('tabd2').addEventListener('click', function(){
+x.style.backgroundColor = "#000";
+});
+document.getElementById('tabd1').addEventListener('click', function(){
+x.style.backgroundColor = "#000";
+y.style.backgroundColor = "#666";
+});
+</script>
